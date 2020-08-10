@@ -56,12 +56,10 @@
 		0AAE54E024E1BA410094F2EC /* 07 - Countdown Timer */ = {
 			isa = PBXGroup;
 			children = (
-				0AAE54E124E1BA410094F2EC /* AppDelegate.swift */,
-				0AAE54E324E1BA410094F2EC /* SceneDelegate.swift */,
-				0AAE54E524E1BA410094F2EC /* ContentView.swift */,
 				0AAE54E724E1BA430094F2EC /* Assets.xcassets */,
-				0AAE54EC24E1BA430094F2EC /* LaunchScreen.storyboard */,
 				0AAE54EF24E1BA430094F2EC /* Info.plist */,
+				0AAE54F524E1BA8D0094F2EC /* Delegate */,
+				0AAE54F624E1BA940094F2EC /* View */,
 				0AAE54E924E1BA430094F2EC /* Preview Content */,
 			);
 			path = "07 - Countdown Timer";
@@ -73,6 +71,24 @@
 				0AAE54EA24E1BA430094F2EC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0AAE54F524E1BA8D0094F2EC /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				0AAE54E124E1BA410094F2EC /* AppDelegate.swift */,
+				0AAE54E324E1BA410094F2EC /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		0AAE54F624E1BA940094F2EC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0AAE54E524E1BA410094F2EC /* ContentView.swift */,
+				0AAE54EC24E1BA430094F2EC /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
