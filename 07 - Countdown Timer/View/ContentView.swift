@@ -9,25 +9,37 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedDate: Date = Date().addingTimeInterval(86400)
+    
+    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+    
+    @State private var selectedDate: Date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var currentDate = Date()
     @State private var timer: Timer?
     
-    var tomorrow: Date {
-        let currentDate = Date()
-        var dateComponent = DateComponents()
-        dateComponent.day = 1
-        let dayPlusOne = Calendar.current.date(byAdding: dateComponent, to: currentDate)
-        
-        return dayPlusOne ?? Date()
-        
-    }
-    
     var selectedDateStart: Date {
         let date = selectedDate
-        let cal = Calendar(identifier: .gregorian)
-        let dateStart = cal.date(bySettingHour: 0, minute: 0, second: 0, of: date)
-        return dateStart ?? Date()
+        let startOfDay = Calendar.current.dateInterval(of: .day, for: date)?.start ?? date
+        return startOfDay
+    }
+    
+    var daysBetween: Int {
+        let between = Calendar.current.dateComponents([.day], from: currentDate, to: selectedDateStart).day ?? 0
+        return between
+    }
+    
+    var hoursBetween: Int {
+        let between = Calendar.current.dateComponents([.hour], from: currentDate, to: selectedDateStart).hour ?? 0
+        return between % 24
+    }
+    
+    var minutesBetween: Int {
+        let between = Calendar.current.dateComponents([.minute], from: currentDate, to: selectedDateStart).minute ?? 0
+        return between % 60
+    }
+    
+    var secondsBetween: Int {
+        let between = Calendar.current.dateComponents([.second], from: currentDate, to: selectedDateStart).second ?? 0
+        return between % 60
     }
     
     var body: some View {
@@ -47,18 +59,14 @@ struct ContentView: View {
                 print("now: \(Date())")
                 print("current: \(self.currentDate)")
                 print("selected: \(self.selectedDateStart)")
-                //print("tomorrow: \(self.tomorrow)")
+                print("tomorrow: \(self.tomorrow)")
             }
-            
-            //Text("current to selected start: \(currentDate.distance(to: selectedDateStart))")
-            
+             
             Group {
-                Text("Days: \(currentDate.distance(to: selectedDateStart) / 86400, specifier: "%.0f")")
-                Text("Hours: \((currentDate.distance(to: selectedDateStart)  / 60 / 60).truncatingRemainder(dividingBy: 24.0), specifier: "%.0f")")
-                Text("Minutes: \((currentDate.distance(to: selectedDateStart) / 60).truncatingRemainder(dividingBy: 60.0), specifier: "%.0f")")
-                Text("Seconds: \(currentDate.distance(to: selectedDateStart).truncatingRemainder(dividingBy: 60.0), specifier: "%.0f")")
-                
-                
+                Text("Days: \(daysBetween)")
+                Text("Hours: \(hoursBetween)")
+                Text("Minutes: \(minutesBetween)")
+                Text("Seconds: \(secondsBetween)")
             }
             
         }
