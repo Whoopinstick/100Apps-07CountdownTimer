@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var selectedDate: Date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var currentDate = Date()
     @State private var timer: Timer?
+    @State private var isStarted = false
     
     var selectedDateStart: Date {
         let date = selectedDate
@@ -49,24 +50,46 @@ struct ContentView: View {
             DatePicker("Select a date", selection: $selectedDate, in: tomorrow..., displayedComponents: .date)
                 .labelsHidden()
             
+            
             Button("Start Countdown") {
-                self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                    self.currentDate = Date()
+                self.isStarted.toggle()
+                self.currentDate = Date()
+                
+                if self.isStarted {
+                    self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                        self.currentDate = Date()
+                    }
+                } else {
+                    self.timer?.invalidate()
                 }
             }
+            .padding()
             
-            Button("Print dates") {
-                print("now: \(Date())")
-                print("current: \(self.currentDate)")
-                print("selected: \(self.selectedDateStart)")
-                print("tomorrow: \(self.tomorrow)")
-            }
-             
-            Group {
-                Text("Days: \(daysBetween)")
-                Text("Hours: \(hoursBetween)")
-                Text("Minutes: \(minutesBetween)")
-                Text("Seconds: \(secondsBetween)")
+            if isStarted {
+                VStack {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Text("Days")
+                        Spacer()
+                        Text("Hours")
+                        Spacer()
+                        Text("Minutes")
+                        Spacer()
+                        Text("Seconds")
+                        Spacer()
+                    }
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Text("\(daysBetween)")
+                        Spacer()
+                        Text("\(hoursBetween)")
+                        Spacer()
+                        Text("\(minutesBetween)")
+                        Spacer()
+                        Text("\(secondsBetween)")
+                        Spacer()
+                    }
+                }
             }
             
         }
